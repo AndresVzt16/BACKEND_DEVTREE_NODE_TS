@@ -1,0 +1,24 @@
+{
+  "name": "backend_devtree_node_ts",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "Andres",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon src/index.ts",
+    "dev": "ts-node src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "mongoose": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "dotenv": "^17.2.3",
+    "nodemon": "^3.1.11",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}
