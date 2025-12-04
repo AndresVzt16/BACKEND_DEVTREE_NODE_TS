@@ -1,9 +1,7 @@
 import { Router } from "express";
-
+import { createAccount } from "../handlers";
 const router = Router();
 
-router.get("/", (req, res) => {
-  res.send("Hello, World!");
-}); 
+router.post('/auth/register', createAccount);
 
 export default router;
