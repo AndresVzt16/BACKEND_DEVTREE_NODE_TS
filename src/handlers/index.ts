@@ -1,30 +1,12 @@
 import User from "../models/User";
 import { Request, Response } from "express";
-import { hashPassword } from "../utils/auth";
+import { validationResult } from "express-validator";
+import { hashPassword, checkPassword } from "../utils/auth";
+import slug from "slug";
 
-const createAccount = async (req: Request, res: Response) => {
+const getUserByParameter = async (field: string, value: String) => {
   try {
-    const { email, password } = req.body;
-    const userExists = await getUserByEmail(email);
-    if (userExists) {
-      const error = new Error("El usuario ya existe");
-      return res.status(400).json({ error: error.message });
-    }
-    const newUser = new User(req.body);
-    newUser.password = await hashPassword(password);
-    await newUser.save();
-    res
-      .status(201)
-      .json({ message: "Usuario creado exitosamente", user: newUser });
-  } catch (e) {
-    const error = new Error("Error al crear el usuario");
-    res.status(500).json({ error });
-  }
-};
-
-const getUserByEmail = async (email: string) => {
-  try {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ [field]: value });
     if (!user) {
       return null;
     }
@@ -34,4 +16,54 @@ const getUserByEmail = async (email: string) => {
   }
 };
 
-export { createAccount, getUserByEmail };
+
+
+const createAccount = async (req: Request, res: Response) => {
+
+  try {
+    const { email, password, handle } = req.body;
+    const userExists = await getUserByParameter("email", email);
+    const handleExists = await getUserByParameter("handle", slug(handle, ""));
+
+    if (userExists) {
+      const error = new Error("El usuario ya existe");
+      return res.status(400).json({ error: error.message });
+    }
+    if (handleExists) {
+      const error = new Error("El handle ya está en uso");
+      return res.status(400).json({ error: error.message });
+    }
+
+    const newUser = new User(req.body);
+    newUser.password = await hashPassword(password);
+    newUser.handle = slug(handle, "");
+    await newUser.save();
+    res.status(201).json({ message: "Usuario creado exitosamente", user: newUser });
+  } catch (e) {
+    const error = new Error("Error al crear el usuario");
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
+const login = async (req: Request, res: Response) => {
+  const{email, password} = req.body
+  try {
+    const userExists = await getUserByParameter('email', email )
+    if(!userExists){
+      const error = new Error("El usuario no existe")
+      res.status(401).json({error: error.message})
+    }
+    const isPasswordCorrect = await checkPassword(password, userExists.password)
+    if(!isPasswordCorrect){
+      const error = new Error('Usuario o contraseña no validos')
+      return res.status(401).json({error: error.message})
+    }
+  } catch (e) {
+    const error = new Error('Ocurrio un error, por favor intente de nuevo mas tarde.')
+    res.status(500).json({error: error.message})
+  }
+
+};
+
+export { createAccount, login };
