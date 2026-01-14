@@ -26,7 +26,7 @@ const createAccount = async (req: Request, res: Response) => {
     const handleExists = await getUserByParameter("handle", slug(handle, ""));
 
     if (userExists) {
-      const error = new Error("El usuario ya existe");
+      const error = new Error("Ya existe un usuario registrado con el email ingresado.");
       return res.status(400).json({ error: error.message });
     }
     if (handleExists) {
@@ -51,12 +51,12 @@ const login = async (req: Request, res: Response) => {
   try {
     const userExists = await getUserByParameter('email', email )
     if(!userExists){
-      const error = new Error("El usuario no existe")
+      const error = new Error("Las crendenciales ingresadas son incorrectas.")
       res.status(401).json({error: error.message})
     }
     const isPasswordCorrect = await checkPassword(password, userExists.password)
     if(!isPasswordCorrect){
-      const error = new Error('Usuario o contraseña no validos')
+      const error = new Error('Las crendenciales ingresadas son incorrectas.')
       return res.status(401).json({error: error.message})
     }
   } catch (e) {
