@@ -29,4 +29,5 @@ const handleErrors = (req: Request, res: Response, next: NextFunction) => {
   next();
 };
 
-export { checkValidation, loginValidation, handleErrors };
+
+export { checkValidation, loginValidation, handleErrors};

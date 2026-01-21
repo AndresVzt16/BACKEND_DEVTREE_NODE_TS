@@ -1,9 +1,13 @@
 import mongoose from "mongoose";
+import { generateUIID } from "../helpers";
 export interface IUser {
   name: string;
   email: string;
   password: string;
+  description: string;
   handle: string;
+  token:string;
+  confirmed:boolean;
 }
 const userSchema = new mongoose.Schema(
   {
@@ -23,8 +27,20 @@ const userSchema = new mongoose.Schema(
       trim: true,
       lowercase: true,
     },
+    description:{
+      type:String,
+      default:''
+    },
+    confirmed:{
+      type:Boolean,
+      default:false
+    },
+    token:{
+      type: String,
+      default:null
+    }
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const User = mongoose.model<IUser>("User", userSchema);
