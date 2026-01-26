@@ -21,6 +21,13 @@ const loginValidation = [
 ];
 
 
+const updateProfileValidation = [
+  body("handle").notEmpty().withMessage("El handle es obligatorio"),
+  body("description").notEmpty().withMessage("La descripcion es obligatoria"),
+  
+]
+
+
 const handleErrors = (req: Request, res: Response, next: NextFunction) => {
   let errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -30,4 +37,4 @@ const handleErrors = (req: Request, res: Response, next: NextFunction) => {
 };
 
 
-export { checkValidation, loginValidation, handleErrors};
+export { checkValidation, loginValidation,updateProfileValidation, handleErrors};

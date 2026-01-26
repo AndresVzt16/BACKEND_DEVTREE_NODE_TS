@@ -77,7 +77,7 @@ const activateAccount = async (req: Request, res: Response) => {
     const user = await getUserByParameter("token", token);
     if (!user) {
       const error = new Error("Token no valido");
-      res.status(404).json({ error: error.message });
+      return res.status(404).json({ error: error.message });
     }
     user.confirmed = true;
     user.token = null;
@@ -124,4 +124,28 @@ const getUser = async (req: Request, res: Response) => {
   res.json(req.User);
 };
 
-export { createAccount, login, getUser, activateAccount };
+const updateProfile = async (req: Request, res: Response) => {
+  try {
+    const { description, handle } = req.body;
+
+    const newHandle = slug(handle, "");
+    const handleExists = await getUserByParameter("handle", newHandle);
+    /* validar que el usuario no duplique el handle */
+    if (handleExists && handleExists.email !== req.User.email) {
+      const error = new Error("El handle ya esta en uso.");
+      return res.status(401).json({ error: error.message });
+    }
+
+    req.User.handle = newHandle;
+    req.User.description = description;
+    await req.User.save();
+    return res
+      .status(200)
+      .json({ message: "Perfil actualizado correctamente." });
+    /* const user = await getUserByParameter('_id',) */
+  } catch (e) {
+    const error = new Error("Hubo un error");
+    return res.status(500).json({ error: error.message });
+  }
+};
+export { createAccount, login, getUser, activateAccount, updateProfile };

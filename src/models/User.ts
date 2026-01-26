@@ -1,6 +1,7 @@
-import mongoose from "mongoose";
+
+import mongoose, {Schema,Document} from "mongoose";
 import { generateUIID } from "../helpers";
-export interface IUser {
+export interface IUser extends Document{
   name: string;
   email: string;
   password: string;
@@ -9,7 +10,7 @@ export interface IUser {
   token:string;
   confirmed:boolean;
 }
-const userSchema = new mongoose.Schema(
+const userSchema = new Schema(
   {
     name: { type: String, required: true, trim: true },
     email: {
