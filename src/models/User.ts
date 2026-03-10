@@ -9,6 +9,10 @@ export interface IUser extends Document{
   handle: string;
   token:string;
   confirmed:boolean;
+  image:string,
+  imageId:string,
+  links:String,
+  tags:String
 }
 const userSchema = new Schema(
   {
@@ -39,6 +43,22 @@ const userSchema = new Schema(
     token:{
       type: String,
       default:null
+    },
+    image:{
+      type:String,
+      default:''
+    },
+    imageId:{
+      type:String,
+      default:''
+    },
+    links:{
+      type:String,
+      default:'[]'
+    },
+    tags:{
+      type:String,
+      default:'[]'
     }
   },
   { timestamps: true },

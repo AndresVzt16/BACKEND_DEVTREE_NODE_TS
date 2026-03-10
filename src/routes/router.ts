@@ -6,6 +6,7 @@ import {
   getUser,
   activateAccount,
   updateProfile,
+  uploadImageProfile,
 } from "../handlers";
 import { ExpressValidator } from "express-validator";
 import {
@@ -27,6 +28,8 @@ router
   .route("/user")
   .get(authenticate, getUser)
   .patch(updateProfileValidation, handleErrors, authenticate, updateProfile);
-router.get("/user", authenticate, getUser);
+/* router.get("/user", authenticate, getUser); */
+
+router.post('/user/image', authenticate, uploadImageProfile)
 
 export default router;
