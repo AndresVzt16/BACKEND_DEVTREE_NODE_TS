@@ -16,18 +16,26 @@ const checkValidation = [
 const loginValidation = [
   body("email").isEmail().withMessage("El email no es válido"),
   body("password")
-    .isLength({ min: 6 })
+    .notEmpty()
     .withMessage("La contraseña es obligatoria"),
 ];
+
+
+const updateProfileValidation = [
+  body("handle").notEmpty().withMessage("El handle es obligatorio"),
+  body("description").notEmpty().withMessage("La descripcion es obligatoria"),
+  
+]
 
 
 const handleErrors = (req: Request, res: Response, next: NextFunction) => {
   let errors = validationResult(req);
   if (!errors.isEmpty()) {
+    console.log(errors.array())
     return res.status(400).json({ errors: errors.array() });
   }
   next();
 };
 
 
-export { checkValidation, loginValidation, handleErrors};
+export { checkValidation, loginValidation,updateProfileValidation, handleErrors};
