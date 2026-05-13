@@ -3,8 +3,8 @@ import formidable from "formidable";
 import slug from "slug";
 import cloudinary from "../config/cloudinary";
 import { Request, Response } from "express";
-import { validationResult } from "express-validator";
-import { hashPassword, checkPassword } from "../utils/auth";
+import { hashPassword, 
+  checkPassword } from "../utils/auth";
 import { sendMessage } from "../services/email.services";
 import { generateJWT } from "../utils/jwt";
 import { EmailMessage } from "../services/email.services";
@@ -128,7 +128,7 @@ const getUser = async (req: Request, res: Response) => {
 
 const updateProfile = async (req: Request, res: Response) => {
   try {
-    const { description, handle, name, links, tags } = req.body;
+    const { description, handle, name, links, tags, location } = req.body;
 
     const newHandle = slug(handle, "");
     const handleExists = await getUserByParameter("handle", newHandle);
@@ -142,6 +142,7 @@ const updateProfile = async (req: Request, res: Response) => {
     req.User.name = name;
     req.User.links = links;
     req.User.tags = tags;
+    req.User.location = location
     
     await req.User.save();
     return res
@@ -149,6 +150,7 @@ const updateProfile = async (req: Request, res: Response) => {
       .json({ message: "Perfil actualizado correctamente." });
     /* const user = await getUserByParameter('_id',) */
   } catch (e) {
+    console.log(e)
     const error = new Error("Hubo un error");
     return res.status(500).json({ error: error.message });
   }

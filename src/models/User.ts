@@ -6,6 +6,7 @@ export interface IUser extends Document{
   email: string;
   password: string;
   description: string;
+  location:string;
   handle: string;
   token:string;
   confirmed:boolean;
@@ -31,6 +32,11 @@ const userSchema = new Schema(
       unique: true,
       trim: true,
       lowercase: true,
+    },
+    location:{
+      type:String,
+      required: true,
+      trim:true
     },
     description:{
       type:String,
