@@ -1,16 +1,15 @@
 {
-    "compilerOptions": {
-        "outDir": "./dist",
-        "rootDir": "./src",
-        "lib": ["ESNext"],
-        "target": "esnext",
-        "moduleResolution": "nodenext",
-        "module": "nodenext",
-        "strict": false,
-        "esModuleInterop": true,
-        "declaration": true,
-
-    },
-    "include": ["src/**/*.ts", "env.d.ts"],
-    
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "target": "esnext",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "lib": ["ESNext", "DOM"],
+    "strict": false,
+    "esModuleInterop": true,
+    "declaration": true,
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*.ts", "env.d.ts"]
 }

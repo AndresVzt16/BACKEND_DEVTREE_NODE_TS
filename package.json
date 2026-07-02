@@ -5,7 +5,7 @@
   "license": "ISC",
   "author": "Andres",
   "main": "index.js",
-   "scripts": {
+  "scripts": {
     "dev": "nodemon src/index.ts",
     "dev:api": "nodemon src/index.ts --api",
     "build": "tsc",
@@ -31,6 +31,6 @@
     "dotenv": "^17.2.3",
     "nodemon": "^3.1.11",
     "ts-node": "^10.9.2",
-    "typescript": "^5.9.3"
+    "typescript": "^6.0.3"
   }
 }
