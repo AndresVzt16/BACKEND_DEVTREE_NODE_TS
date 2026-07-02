@@ -7,6 +7,8 @@ import {
   activateAccount,
   updateProfile,
   uploadImageProfile,
+  getUserProfile,
+  serachByHandle
 } from "../handlers";
 import { ExpressValidator } from "express-validator";
 import {
@@ -22,6 +24,7 @@ const router = Router();
 router.post("/auth/register", checkValidation, handleErrors, createAccount);
 router.post("/auth/login", loginValidation, handleErrors, login);
 router.get("/auth/account-activate/:token", activateAccount);
+router.post("/search", updateProfileValidation, handleErrors, serachByHandle)
 
 /* Private routes */
 router
@@ -31,5 +34,8 @@ router
 /* router.get("/user", authenticate, getUser); */
 
 router.post('/user/image', authenticate, uploadImageProfile)
+
+
+router.get("/:handle", getUserProfile)
 
 export default router;

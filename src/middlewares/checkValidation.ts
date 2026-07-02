@@ -22,10 +22,10 @@ const loginValidation = [
 
 
 const updateProfileValidation = [
-  body("handle").notEmpty().withMessage("El handle es obligatorio"),
-  body("description").notEmpty().withMessage("La descripcion es obligatoria"),
-  
+  body("handle").notEmpty().withMessage("El hanlde no puede estar vacio.")
 ]
+
+
 
 
 const handleErrors = (req: Request, res: Response, next: NextFunction) => {
