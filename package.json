@@ -6,6 +6,7 @@
   "author": "Andres",
   "main": "index.js",
   "scripts": {
+    "build": "tsc",
     "start": "nodemon src/index.ts",
     "dev": "nodemon  src/index.ts --api",
     "test": "echo \"Error: no test specified\" && exit 1"
