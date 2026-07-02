@@ -1,15 +1,21 @@
-import mongoose from "mongoose";
+
+import mongoose, {Schema,Document} from "mongoose";
 import { generateUIID } from "../helpers";
-export interface IUser {
+export interface IUser extends Document{
   name: string;
   email: string;
   password: string;
   description: string;
+  location:string;
   handle: string;
   token:string;
   confirmed:boolean;
+  image:string,
+  imageId:string,
+  links:String,
+  tags:String
 }
-const userSchema = new mongoose.Schema(
+const userSchema = new Schema(
   {
     name: { type: String, required: true, trim: true },
     email: {
@@ -27,6 +33,11 @@ const userSchema = new mongoose.Schema(
       trim: true,
       lowercase: true,
     },
+    location:{
+      type:String,
+      
+      trim:true
+    },
     description:{
       type:String,
       default:''
@@ -38,6 +49,22 @@ const userSchema = new mongoose.Schema(
     token:{
       type: String,
       default:null
+    },
+    image:{
+      type:String,
+      default:''
+    },
+    imageId:{
+      type:String,
+      default:''
+    },
+    links:{
+      type:String,
+      default:'[]'
+    },
+    tags:{
+      type:String,
+      default:'[]'
     }
   },
   { timestamps: true },
